@@ -1,3 +1,9 @@
+/**
+ * Creates a prompt for user input.
+ * @type {function}
+ * @param {string} message - The message to display to the user.
+ * @returns {string} - The user's input.
+ */
 const prompt = require("prompt-sync")();
 
 const ROWS = 3;
@@ -18,6 +24,11 @@ const SYMBOL_VALUES={
 
 }
 
+/**
+ * Function to handle deposit.
+ * 
+ * @returns {string} The deposit amount entered by the user.
+ */
 const deposit= () =>{
     while(true){
     const depositAmount = prompt("Enter a deposit Amount: ");
@@ -32,6 +43,10 @@ const deposit= () =>{
 }
 
 
+/**
+ * Retrieves the number of lines from user input.
+ * @returns {number} The number of lines entered by the user.
+ */
 const getNumberOfLines = () =>{
     while(true){
         const lines = prompt("Enter the number of lines: (1-3 )");
@@ -45,6 +60,13 @@ const getNumberOfLines = () =>{
     };
 }
 
+/**
+ * Retrieves the bet amount per line.
+ * 
+ * @param {number} balance - The current balance.
+ * @param {number} lines - The number of lines.
+ * @returns {number} - The bet amount per line.
+ */
 const getBet=(balance,lines)=>{
     while(true){
         const bet = prompt("Enter the bet per line: ");
@@ -58,26 +80,11 @@ const getBet=(balance,lines)=>{
     };
 }
 
-const spin =() =>{
-    const symbols = [];
-    for (const [symbol, count] of Object.entries(SYMBOLS_COUNT)){
-        for(let i =0 ; i< count ; i++){
-            symbols.push(symbol);
-        }
-}
-const reels =[];
-for(let i=0;i<COLS;i++){
-        reels.push([]);
-    const reelSymbols=[...symbols];
-    for(let j=0; j<ROWS; j++){
-        const randomIndex= Math.floor(Math.random()*reelSymbols.length);
-        const selectedSymbol = reelSymbols[randomIndex];
-        reels[i].push(selectedSymbol);
-        reelSymbols.splice(randomIndex,1);
-
-    }
-}
-return reels;}
+/**
+ * Spins the reels and returns an array of randomly selected symbols.
+ * 
+ * @returns {Array<Array<string>>} The array of reels with randomly selected symbols.
+ */
 
 const transpose=(reels) =>{
     const rows=[];
@@ -101,6 +108,14 @@ const printRows=(rows)=>{
     console.log(rowString);
 }
 };
+/**
+ * Calculates the winnings based on the provided rows, bet, and lines.
+ *
+ * @param {Array<Array<string>>} rows - The rows of symbols.
+ * @param {number} bet - The bet amount.
+ * @param {number} lines - The number of lines.
+ * @returns {number} The total winnings.
+ */
 const getWinnigs =(rows, bet,lines)=>{
 let winnings=0;
 for(let row=0; row<lines; row ++){
@@ -120,6 +135,11 @@ for(let row=0; row<lines; row ++){
 
 }
 
+/**
+ * Represents a game.
+ * @function game
+ * @returns {void}
+ */
 const game=()=>{
 print("you have a balance of $"+ balance);
 let balance = deposit(); 
